@@ -105,4 +105,10 @@ public class FachadaBD extends SQLiteOpenHelper {
         return receitas;
     }
 
+    public int removerReceita(Receita receita){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        return db.delete("RECEITAS", "CODIGO = " + receita.getCodigo(), null);
+    }
+
 }

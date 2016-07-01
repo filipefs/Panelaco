@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="br.edu.ifba.mobile.panelaco.PanelacoActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/cadastro_remover"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Remover"
         app:showAsAction="never" />
 </menu>
