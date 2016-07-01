@@ -25,7 +25,11 @@ public class GravacaoReceita extends AsyncTask<Void, Void, String> {
         String mensagem = "";
 
         long codigo = -1;
-        codigo = FachadaBD.getInstancia().inserirReceita(receita);
+        if(receita.getCodigo() == -1){
+            codigo = FachadaBD.getInstancia().inserirReceita(receita);
+        }else {
+            codigo = FachadaBD.getInstancia().atualizarReceitas(receita);
+        }
 
         if(codigo > 0){
             mensagem = "Receita gravada com sucesso!";

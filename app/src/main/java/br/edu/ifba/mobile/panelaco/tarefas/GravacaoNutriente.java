@@ -28,7 +28,11 @@ public class GravacaoNutriente extends AsyncTask<Void, Void, String> {
         String mensagem = "";
 
         long codigo = -1;
-        codigo = FachadaBD.getInstancia().inserirNutriente(infoNutricional);
+        if(codigo == -1){
+            codigo = FachadaBD.getInstancia().inserirNutriente(infoNutricional);
+        }else{
+            codigo = FachadaBD.getInstancia().atualizarNutrientes(infoNutricional);
+        }
 
         if(codigo > 0){
             mensagem = "Informação nutricional guardada com sucesso";

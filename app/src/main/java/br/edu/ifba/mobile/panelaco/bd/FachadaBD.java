@@ -108,7 +108,54 @@ public class FachadaBD extends SQLiteOpenHelper {
     public int removerReceita(Receita receita){
         SQLiteDatabase db = this.getWritableDatabase();
 
+        db.delete("NUTRICAO", "COD_RECEITAS = "+receita.getCodigo(), null);
+
         return db.delete("RECEITAS", "CODIGO = " + receita.getCodigo(), null);
+
+    }
+
+    public InfoNutricional procurarNutrientes(long codigo){
+        SQLiteDatabase db = this.getReadableDatabase();
+        InfoNutricional nutrientes = null;
+
+        if(codigo != 0) {
+            String selecao = "SELECT CODIGO, NUTRIENTES, CALORIAS FROM NUTRICAO WHERE COD_RECEITAS = " + codigo;
+            Cursor cursor = db.rawQuery(selecao, null);
+            nutrientes = new InfoNutricional();
+            if (cursor.moveToFirst()) {
+                do {
+                    nutrientes.setCodigo(cursor.getLong(cursor.getColumnIndex("CODIGO")));
+                    nutrientes.setNutrientes(cursor.getString(cursor.getColumnIndex("NUTRIENTES")));
+                    nutrientes.setCalorias(cursor.getInt(cursor.getColumnIndex("CALORIAS")));
+                }while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+        return nutrientes;
+
+    }
+
+    public long atualizarReceitas(Receita receita){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues valores = new ContentValues();
+
+        valores.put("NOME", receita.getNome());
+        valores.put("INGREDIENTES", receita.getIngredientes());
+        valores.put("PREPARO", receita.getModoPreparo());
+
+        long codigo = db.update("RECEITAS", valores, "CODIGO = " + receita.getCodigo(), null);
+        return codigo;
+    }
+
+    public long atualizarNutrientes(InfoNutricional nutrientes){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues valores = new ContentValues();
+
+        valores.put("NUTRIENTES", nutrientes.getNutrientes());
+        valores.put("CALORIAS", nutrientes.getCalorias());
+
+        long codigo = db.update("NUTRICAO", valores, "CODIGO = " + nutrientes.getCodigo(), null);
+        return codigo;
     }
 
 }

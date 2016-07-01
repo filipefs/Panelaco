@@ -15,6 +15,7 @@ import android.widget.TabHost;
 
 import br.edu.ifba.mobile.panelaco.PanelacoActivity;
 import br.edu.ifba.mobile.panelaco.R;
+import br.edu.ifba.mobile.panelaco.bd.InfoNutricional;
 import br.edu.ifba.mobile.panelaco.bd.Receita;
 import br.edu.ifba.mobile.panelaco.tarefas.GravacaoReceita;
 
@@ -76,5 +77,27 @@ public class FragmentoCadastroReceitas extends Fragment {
         return receita;
     }
 
+    public void exibirReceitaSelecionada(){
+        receita = FragmentoListaReceitas.getInstancia().getReceitaSelecionada();
+
+        if(receita.getCodigo() == -1){
+            limparCampos();
+        }else{
+            carregarCampos();
+        }
+    }
+
+
+    public void limparCampos(){
+        nome.setText("");
+        ingredientes.setText("");
+        modoPreparo.setText("");
+    }
+
+    public void carregarCampos(){
+        nome.setText(receita.getNome());
+        ingredientes.setText(receita.getIngredientes());
+        modoPreparo.setText(receita.getModoPreparo());
+    }
 
 }

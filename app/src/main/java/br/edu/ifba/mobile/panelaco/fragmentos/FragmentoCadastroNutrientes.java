@@ -58,7 +58,6 @@ public class FragmentoCadastroNutrientes extends Fragment{
         nutrientes = (EditText) tela.findViewById(R.id.nutrientes);
         calorias = (EditText) tela.findViewById(R.id.calorias);
         listaReceitas = (Spinner) tela.findViewById(R.id.receitaNutriente);
-        //List<String> itens = listaNomeReceitas();
         List<Receita> receitas =  FachadaBD.getInstancia().listarReceitas();
         ArrayAdapter<Receita> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, receitas);
         listaReceitas.setAdapter(adapter);
@@ -115,6 +114,29 @@ public class FragmentoCadastroNutrientes extends Fragment{
         infoNutricional.setCodReceitas(getCodigoSelecionado());
 
         return infoNutricional;
+    }
+
+    public void exibirNutrientesSelecionados(){
+        long codigo = FragmentoListaReceitas.getInstancia().getReceitaSelecionada().getCodigo();
+
+        if(codigo == 0){
+            limparCampos();
+        }else {
+            infoNutricional = FachadaBD.getInstancia().procurarNutrientes(codigo);
+            carregarCampos();
+        }
+    }
+
+    public void limparCampos(){
+        nutrientes.setText("");
+        calorias.setText("");
+    }
+
+    public void carregarCampos(){
+        nutrientes.setText(infoNutricional.getNutrientes());
+        calorias.setText(infoNutricional.getCalorias() + "");
+       // calorias.setText(Integer.valueOf(infoNutricional.getCalorias()));
+
     }
 
 }
