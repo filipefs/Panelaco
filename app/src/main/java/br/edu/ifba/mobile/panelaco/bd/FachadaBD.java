@@ -36,39 +36,57 @@ public class FachadaBD extends SQLiteOpenHelper {
     }
 
     private static String COMANDO_CRIACAO_TABELA_RECEITAS = "CREATE TABLE RECEITAS(CODIGO INTEGER PRIMARY KEY AUTOINCREMENT," +
-            " NOME TEXT, INGREDIENTES TEXT, PREPARO TEXT, NUTRIENTES TEXT, CALORIAS INT)";
+            " NOME TEXT, INGREDIENTES TEXT, PREPARO TEXT)";
 
+
+    private static String COMANDO_CRIACAO_TABELA_NUTRICAO = "CREATE TABLE NUTRICAO(CODIGO INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "NUTRIENTES TEXT, CALORIAS INT, COD_RECEITAS INTEGER, FOREIGN KEY(COD_RECEITAS) REFERENCES RECEITAS(CODIGO))";
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(COMANDO_CRIACAO_TABELA_RECEITAS);
+        db.execSQL(COMANDO_CRIACAO_TABELA_NUTRICAO);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL("DROP TABLE IF EXISTS RECEITAS");
+        db.execSQL("DROP TABLE IF EXISTS NUTRICAO");
+        onCreate(db);
     }
 
-    public long inserir(Receita receita){
+    public long inserirReceita(Receita receita){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues valores = new ContentValues();
 
         valores.put("NOME", receita.getNome());
         valores.put("INGREDIENTES", receita.getIngredientes());
         valores.put("PREPARO", receita.getModoPreparo());
-        valores.put("NUTRIENTES", receita.getNutrientes());
-        valores.put("CALORIAS", receita.getCalorias());
 
         long codigo = db.insert("RECEITAS", null, valores);
 
         return codigo;
     }
 
+    public long inserirNutriente(InfoNutricional infoNutricional){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues valores = new ContentValues();
+
+        valores.put("NUTRIENTES", infoNutricional.getNutrientes());
+        valores.put("CALORIAS", infoNutricional.getCalorias());
+        valores.put("COD_RECEITAS", infoNutricional.getCodReceitas());
+
+        long codigo = db.insert("NUTRICAO", null, valores);
+
+        return codigo;
+
+    }
+
     public List<Receita> listarReceitas(){
         List<Receita> receitas = new ArrayList<Receita>();
         SQLiteDatabase db = getReadableDatabase();
 
-        String selecao = "SELECT CODIGO, NOME, CALORIAS FROM RECEITAS";
+        String selecao = "SELECT CODIGO, NOME, INGREDIENTES, PREPARO FROM RECEITAS";
         Cursor cursor = db.rawQuery(selecao, null);
         if(cursor != null){
             boolean temProximo = cursor.moveToFirst();
@@ -78,8 +96,6 @@ public class FachadaBD extends SQLiteOpenHelper {
                 receita.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
                 receita.setIngredientes(cursor.getString(cursor.getColumnIndex("INGREDIENTES")));
                 receita.setModoPreparo(cursor.getString(cursor.getColumnIndex("PREPARO")));
-                receita.setNutrientes(cursor.getString(cursor.getColumnIndex("NUTRIENTES")));
-                receita.setCalorias(cursor.getInt(cursor.getColumnIndex("CALORIAS")));
 
                 receitas.add(receita);
 

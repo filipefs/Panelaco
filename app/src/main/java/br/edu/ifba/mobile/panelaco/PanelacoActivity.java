@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import br.edu.ifba.mobile.panelaco.bd.FachadaBD;
 import br.edu.ifba.mobile.panelaco.fragmentos.FragmentoCadastroNutrientes;
 import br.edu.ifba.mobile.panelaco.fragmentos.FragmentoCadastroReceitas;
 import br.edu.ifba.mobile.panelaco.fragmentos.FragmentoInformacao;
@@ -70,6 +71,8 @@ public class PanelacoActivity extends AppCompatActivity implements ViewPager.OnP
 
         mViewPager.addOnPageChangeListener(this);
 
+        FachadaBD.criarInstancia(this.getApplicationContext());
+
     }
 
 
@@ -103,7 +106,9 @@ public class PanelacoActivity extends AppCompatActivity implements ViewPager.OnP
 
     @Override
     public void onPageSelected(int position) {
-
+        if(position == 1){
+            FragmentoListaReceitas.getInstancia().atualizar();
+        }
     }
 
     @Override
@@ -164,5 +169,6 @@ public class PanelacoActivity extends AppCompatActivity implements ViewPager.OnP
             }
             return null;
         }
+
     }
 }

@@ -5,33 +5,37 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import br.edu.ifba.mobile.panelaco.bd.FachadaBD;
-import br.edu.ifba.mobile.panelaco.bd.Receita;
+import br.edu.ifba.mobile.panelaco.bd.InfoNutricional;
 
 /**
- * Created by Filipe on 25/06/2016.
+ * Created by Filipe on 26/06/2016.
  */
-public class GravacaoReceita extends AsyncTask<Void, Void, String> {
+public class GravacaoNutriente extends AsyncTask<Void, Void, String> {
 
-    private Receita receita = null;
+    private InfoNutricional infoNutricional = null;
     private Context contexto = null;
 
-    public GravacaoReceita(Context contexto, Receita receita){
+    public GravacaoNutriente(Context contexto, InfoNutricional infoNutricional){
+        this.infoNutricional = infoNutricional;
         this.contexto = contexto;
-        this.receita = receita;
     }
+
+
+
 
     @Override
     protected String doInBackground(Void... params) {
         String mensagem = "";
 
         long codigo = -1;
-        codigo = FachadaBD.getInstancia().inserirReceita(receita);
+        codigo = FachadaBD.getInstancia().inserirNutriente(infoNutricional);
 
         if(codigo > 0){
-            mensagem = "Receita gravada com sucesso!";
+            mensagem = "Informação nutricional guardada com sucesso";
         }else {
-            mensagem = "Erro de gravação!";
+            mensagem = "Erro ao gravar informação nutricional";
         }
+
 
         return mensagem;
     }

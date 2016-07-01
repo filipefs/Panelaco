@@ -9,8 +9,6 @@ public class Receita {
     private String nome;
     private String ingredientes;
     private String modoPreparo;
-    private String nutrientes;
-    private int calorias;
 
     public String getNome() {
         return nome;
@@ -44,28 +42,9 @@ public class Receita {
         this.modoPreparo = modoPreparo;
     }
 
-    public String getNutrientes() {
-        return nutrientes;
-    }
-
-    public void setNutrientes(String nutrientes) {
-        this.nutrientes = nutrientes;
-    }
-
-    public int getCalorias() {
-        return calorias;
-    }
-
-    public void setCalorias(int calorias) {
-        this.calorias = calorias;
-    }
 
     @Override
     public String toString() {
-        return "Receita{" +
-                "codigo=" + codigo +
-                ", nome='" + nome +
-                ", calorias=" + calorias +
-                '}';
+        return codigo + " - Receita de " + nome;
     }
 }

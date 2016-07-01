@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import br.edu.ifba.mobile.panelaco.R;
+import br.edu.ifba.mobile.panelaco.tarefas.ListagemReceita;
 
 /**
  * Created by Filipe on 24/06/2016.
@@ -42,4 +43,8 @@ public class FragmentoListaReceitas extends Fragment {
         lista.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
+    public void atualizar(){
+        ListagemReceita listagemReceita = new ListagemReceita(this.getContext(), lista);
+        listagemReceita.execute();
+    }
 }
