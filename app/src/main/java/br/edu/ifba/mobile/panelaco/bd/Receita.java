@@ -5,7 +5,7 @@ package br.edu.ifba.mobile.panelaco.bd;
  */
 public class Receita {
 
-    private long codigo;
+    private long codigo = -1;
     private String nome;
     private String ingredientes;
     private String modoPreparo;
@@ -45,6 +45,6 @@ public class Receita {
 
     @Override
     public String toString() {
-        return codigo + " - Receita de " + nome;
+        return "Receita de " + nome;
     }
 }

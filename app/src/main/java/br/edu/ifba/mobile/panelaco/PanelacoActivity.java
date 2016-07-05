@@ -84,6 +84,7 @@ public class PanelacoActivity extends AppCompatActivity implements ViewPager.OnP
     public void onPageSelected(int position) {
         if(position == 1){
             FragmentoListaReceitas.getInstancia().atualizar();
+            FragmentoListaReceitas.getInstancia().limparReceita();
         }else if (position == 2){
             FragmentoCadastroReceitas.getInstancia().exibirReceitaSelecionada();
         }else if (position == 3){

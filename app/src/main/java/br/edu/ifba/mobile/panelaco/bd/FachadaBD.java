@@ -59,12 +59,24 @@ public class FachadaBD extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues valores = new ContentValues();
 
+
         valores.put("NOME", receita.getNome());
         valores.put("INGREDIENTES", receita.getIngredientes());
         valores.put("PREPARO", receita.getModoPreparo());
 
+
+
+
+
         long codigo = db.insert("RECEITAS", null, valores);
 
+        /*
+        Cursor c = db.rawQuery("SELECT last_insert_rowid()", null);
+        c.moveToFirst();
+        int id = c.getInt(0);
+        id += 1;
+        receita.setCodigo(id);
+    */
         return codigo;
     }
 

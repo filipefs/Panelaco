@@ -46,6 +46,8 @@ public class FragmentoCadastroNutrientes extends Fragment{
     private long codigoSelecionado;
 
     private InfoNutricional infoNutricional = null;
+    Receita receita = null;
+
 
     @Override
     public View onCreateView(LayoutInflater inflador, ViewGroup vgroup, Bundle bundle){
@@ -84,7 +86,7 @@ public class FragmentoCadastroNutrientes extends Fragment{
 
                 GravacaoNutriente gravacao = new GravacaoNutriente(getContexto(), getNutrientes());
                 gravacao.execute();
-
+                limparCampos();
 
             }
         });
@@ -117,14 +119,20 @@ public class FragmentoCadastroNutrientes extends Fragment{
     }
 
     public void exibirNutrientesSelecionados(){
-        long codigo = FragmentoListaReceitas.getInstancia().getReceitaSelecionada().getCodigo();
+        receita = FragmentoListaReceitas.getInstancia().getReceitaSelecionada();
 
-        if(codigo == 0){
+        if(receita != null){
+            if(receita.getCodigo() == 0){
+                limparCampos();
+            }else {
+                infoNutricional = FachadaBD.getInstancia().procurarNutrientes(receita.getCodigo());
+                carregarCampos();
+                receita = null;
+            }
+        }else{
             limparCampos();
-        }else {
-            infoNutricional = FachadaBD.getInstancia().procurarNutrientes(codigo);
-            carregarCampos();
         }
+
     }
 
     public void limparCampos(){
@@ -135,8 +143,6 @@ public class FragmentoCadastroNutrientes extends Fragment{
     public void carregarCampos(){
         nutrientes.setText(infoNutricional.getNutrientes());
         calorias.setText(infoNutricional.getCalorias() + "");
-       // calorias.setText(Integer.valueOf(infoNutricional.getCalorias()));
-
     }
 
 }

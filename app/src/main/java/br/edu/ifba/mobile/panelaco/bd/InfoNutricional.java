@@ -6,7 +6,7 @@ package br.edu.ifba.mobile.panelaco.bd;
 public class InfoNutricional {
 
 
-    private long codigo;
+    private long codigo = -1;
     private String nutrientes;
     private int calorias;
     private long codReceitas;

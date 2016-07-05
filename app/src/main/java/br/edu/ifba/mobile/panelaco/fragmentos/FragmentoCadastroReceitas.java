@@ -59,6 +59,8 @@ public class FragmentoCadastroReceitas extends Fragment {
             public void onClick(View v){
                 GravacaoReceita gravacao = new GravacaoReceita(getContexto(), getReceita());
                 gravacao.execute();
+               // receita =
+                limparCampos();
             }
         });
 
@@ -69,7 +71,10 @@ public class FragmentoCadastroReceitas extends Fragment {
     }
 
     public Receita getReceita(){
-        receita = new Receita();
+        if(receita==null){
+            receita = new Receita();
+        }
+
         receita.setNome(nome.getText().toString());
         receita.setIngredientes(ingredientes.getText().toString());
         receita.setModoPreparo(modoPreparo.getText().toString());
@@ -80,11 +85,17 @@ public class FragmentoCadastroReceitas extends Fragment {
     public void exibirReceitaSelecionada(){
         receita = FragmentoListaReceitas.getInstancia().getReceitaSelecionada();
 
-        if(receita.getCodigo() == -1){
-            limparCampos();
+
+        if(receita != null){
+            if(receita.getCodigo() == -1){
+                limparCampos();
+            }else{
+                carregarCampos();
+            }
         }else{
-            carregarCampos();
+            limparCampos();
         }
+
     }
 
 
