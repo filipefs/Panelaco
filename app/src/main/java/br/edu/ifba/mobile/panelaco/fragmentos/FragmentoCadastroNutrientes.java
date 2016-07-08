@@ -12,16 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import br.edu.ifba.mobile.panelaco.R;
 import br.edu.ifba.mobile.panelaco.bd.FachadaBD;
 import br.edu.ifba.mobile.panelaco.bd.InfoNutricional;
 import br.edu.ifba.mobile.panelaco.bd.Receita;
 import br.edu.ifba.mobile.panelaco.tarefas.GravacaoNutriente;
-import br.edu.ifba.mobile.panelaco.tarefas.GravacaoReceita;
 
 /**
  * Created by Filipe on 24/06/2016.
@@ -46,7 +43,7 @@ public class FragmentoCadastroNutrientes extends Fragment{
     private long codigoSelecionado;
 
     private InfoNutricional infoNutricional = null;
-    Receita receita = null;
+    private Receita receita = null;
 
 
     @Override
@@ -110,7 +107,9 @@ public class FragmentoCadastroNutrientes extends Fragment{
 
     public InfoNutricional getNutrientes(){
 
-        infoNutricional = new InfoNutricional();
+        if(infoNutricional == null){
+            infoNutricional = new InfoNutricional();
+        }
         infoNutricional.setNutrientes(nutrientes.getText().toString());
         infoNutricional.setCalorias(Integer.valueOf(calorias.getText().toString()));
         infoNutricional.setCodReceitas(getCodigoSelecionado());
@@ -122,12 +121,12 @@ public class FragmentoCadastroNutrientes extends Fragment{
         receita = FragmentoListaReceitas.getInstancia().getReceitaSelecionada();
 
         if(receita != null){
-            if(receita.getCodigo() == 0){
+            if(receita.getCodigo() == -1){
                 limparCampos();
             }else {
                 infoNutricional = FachadaBD.getInstancia().procurarNutrientes(receita.getCodigo());
                 carregarCampos();
-                receita = null;
+                //receita = null;
             }
         }else{
             limparCampos();
