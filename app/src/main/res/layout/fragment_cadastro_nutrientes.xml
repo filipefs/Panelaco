@@ -17,6 +17,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Receita:"
+            android:id="@+id/textView3" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/receitaNutriente"
+            android:spinnerMode="dropdown" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Informações nutricionais:" />
 
         <EditText
@@ -35,19 +48,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/calorias" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Receita:"
-            android:id="@+id/textView3" />
-
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/receitaNutriente"
-            android:spinnerMode="dropdown" />
 
         <Button
             android:layout_width="wrap_content"

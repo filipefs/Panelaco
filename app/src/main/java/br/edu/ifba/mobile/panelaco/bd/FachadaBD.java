@@ -70,13 +70,7 @@ public class FachadaBD extends SQLiteOpenHelper {
 
         long codigo = db.insert("RECEITAS", null, valores);
 
-        /*
-        Cursor c = db.rawQuery("SELECT last_insert_rowid()", null);
-        c.moveToFirst();
-        int id = c.getInt(0);
-        id += 1;
-        receita.setCodigo(id);
-    */
+
         return codigo;
     }
 
